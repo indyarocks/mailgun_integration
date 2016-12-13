@@ -17,14 +17,17 @@ ActiveRecord::Schema.define(version: 20161212173300) do
   enable_extension "citext"
 
   create_table "users", force: :cascade do |t|
-    t.citext   "email",                         null: false
-    t.string   "token",                         null: false
-    t.boolean  "is_suppressed", default: false, null: false
-    t.datetime "invited_at",                    null: false
+    t.citext   "name",                             null: false
+    t.citext   "email",                            null: false
+    t.string   "token",                            null: false
+    t.boolean  "is_suppressed",    default: false, null: false
+    t.datetime "invited_at",                       null: false
+    t.datetime "reminder_sent_at"
     t.datetime "activated_at"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.index ["email"], name: "index_users_on_email", using: :btree
+    t.index ["token"], name: "index_users_on_token", using: :btree
   end
 
 end

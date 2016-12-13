@@ -5,7 +5,15 @@ default: &default
   password: root
   host: localhost
   port: 5432
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
   database: study_soup_development
+
+
+production:
+  <<: *default
+  database: study_soup_production
+  username: study_soup
+  password: <%= ENV['DATABASE_PASSWORD'] %>

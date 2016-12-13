@@ -1,0 +1,47 @@
+<h1>Users</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="table-responsive">
+      <div class="col-md-12">
+        <div class="panel-body">
+          <table class="table table-bordered table-hover table-striped">
+            <thead class='row'>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Invited At</th>
+              <th>Activated</th>
+              <th>Suppressed</th>
+              <th>Reminder Sent </th>
+              <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <%= will_paginate %>
+            <% @users.each do |user| %>
+                <tr>
+                  <td><%= user.name %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.invited_at %></td>
+                  <td><%= user.activated_at.present? %></td>
+                  <td><%= user.is_suppressed %></td>
+                  <td><%= user.reminder_sent_at.present? %></td>
+                  <td><%= link_to 'Show', user %></td>
+                </tr>
+            <% end %>
+            <%= will_paginate %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<br>
+
+<%= link_to 'New User', new_user_path, class: "btn btn-primary btn-large"  %>
