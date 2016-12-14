@@ -1,4 +1,4 @@
-# Rails app integration with Mailgun API
+# Rails app integration with Mailgun API/Webhooks
 
 Integrating a Rails application with the Mailgun API.
 
