@@ -1,12 +1,12 @@
 class MailgunWebhookService < ApplicationService
 
-  def self.register_event(mailgun_id: , event: , data:)
+  def self.register_open(mailgun_id:, data:)
     message = Message.find_by(mailgun_id: mailgun_id)
     return {
-      error: 'Invalid message id.'
+        error: 'Invalid message id.'
     }
     event = message.mailgun_events.new(
-        event: event,
+        event: :opened,
         data: data
     )
     if event.save
@@ -16,6 +16,35 @@ class MailgunWebhookService < ApplicationService
     else
       return {
           error: event.errors.full_messages
+      }
+    end
+  end
+
+  def self.register_event(mailgun_id: , event: , data:, email:)
+    message = Message.find_by(mailgun_id: mailgun_id)
+    return {
+      error: 'Invalid message id.',
+      file: ''
+
+    }
+    csv_file = CSV.generate do |csv|
+      csv << [
+          email, data[:ip], message.subject, event
+      ]
+    end
+    event = message.mailgun_events.new(
+        event: event,
+        data: data
+    )
+    if event.save
+      return {
+          error: '',
+          file: csv_file
+      }
+    else
+      return {
+          error: event.errors.full_messages,
+          file: csv_file
       }
     end
   end

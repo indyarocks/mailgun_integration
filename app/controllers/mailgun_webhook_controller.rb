@@ -4,9 +4,8 @@ class MailgunWebhookController < ApplicationController
   before_action :validate_request_source
 
   def message_open
-    response = MailgunWebhookService.register_event(
+    response = MailgunWebhookService.register_open(
         mailgun_id: open_params['message-id'],
-        event: open_params['event'],
         data: {
             ip: open_params['ip']
         }
@@ -21,20 +20,21 @@ class MailgunWebhookController < ApplicationController
         event: click_params['event'],
         data: {
             ip: click_params['ip']
-        }
+        },
+        email: click_params['recipient']
     )
     status = response[:error].blank? ? 200 : 422
     render json: response, status: status
   end
 
   def message_bounce
-    binding.pry
     response = MailgunWebhookService.register_event(
         mailgun_id: bounce_params['Message-Id'].to_s.gsub(/^<|>$/, ''), # Test webhook have different key here
         event: bounce_params['event'],
         data: {
             ip: bounce_params['ip']
-        }
+        },
+        email: click_params['recipient']
     )
     status = response[:error].blank? ? 200 : 422
     render json: response, status: status
