@@ -26,11 +26,10 @@ class MailgunWebhookService < ApplicationService
   def self.register_event(mailgun_id: , event: , ip_address:, email:)
     message = Message.find_by(mailgun_id: mailgun_id)
     return {
-      error: 'Invalid message id.',
-      file: ''
+      error: 'Invalid message id.'
     } if message.blank?
 
-    temp_file = Tempfile.new("#{Time.now.to_i}_#{event}.csv")
+    temp_file = Tempfile.new("#{Time.now.to_i}_#{event}.csv", Rails.root.join('tmp'))
     csv_file = CSV.open(temp_file, 'w') do |csv|
       csv << [
           email, ip_address, message.subject, event
@@ -42,13 +41,11 @@ class MailgunWebhookService < ApplicationService
     )
     if event.save
       return {
-          error: '',
-          file: csv_file
+          error: ''
       }
     else
       return {
-          error: event.errors.full_messages,
-          file: csv_file
+          error: event.errors.full_messages
       }
     end
   end
