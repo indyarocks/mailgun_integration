@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  http_basic_authenticate_with name: 'admin', password: 'password'
+  http_basic_authenticate_with name: 'admin', password: 'password', except: :user_activation
 
   before_action :set_user, only: [:show]
 

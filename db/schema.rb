@@ -10,11 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161212173300) do
+ActiveRecord::Schema.define(version: 20161214183220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "citext"
+
+  create_table "mailgun_events", force: :cascade do |t|
+    t.integer  "message_id",                null: false
+    t.integer  "event",                     null: false
+    t.jsonb    "data",       default: "{}", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["data"], name: "index_mailgun_events_on_data", using: :gin
+    t.index ["message_id"], name: "index_mailgun_events_on_message_id", using: :btree
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer  "user_id",                  null: false
+    t.citext   "mailgun_id"
+    t.integer  "message_type", default: 0, null: false
+    t.citext   "subject"
+    t.citext   "content"
+    t.datetime "opened_at"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
     t.citext   "name",                             null: false

@@ -8,5 +8,12 @@ Rails.application.routes.draw do
     end
   end
 
+  scope :mailgun do
+    post '/open' => 'mailgun_webhook#message_open'
+    post '/click' => 'mailgun_webhook#message_click'
+    post '/bounce' => 'mailgun_webhook#message_bounce'
+  end
+
+  require 'sidekiq/web'
   mount Sidekiq::Web => '/admin/sidekiq'
 end

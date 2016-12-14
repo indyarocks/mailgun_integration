@@ -2,6 +2,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, uniqueness: true, presence: true, format: /\A[^@\s]+@([^@\s]+\.)+[^@\W]+\z/, case_sensitive: false
   before_create :generate_token
+  has_many :messages
 
   private
     def generate_token
