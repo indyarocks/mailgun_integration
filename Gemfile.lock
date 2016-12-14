@@ -85,8 +85,6 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
-    mailgun-ruby (1.1.2)
-      rest-client (~> 2.0)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -166,6 +164,8 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
       redis (~> 3.2, >= 3.2.1)
+    sidekiq-statistic (1.2.0)
+      sidekiq (>= 3.3.4, < 5)
     sinatra (1.0)
       rack (>= 1.0)
     spring (2.0.0)
@@ -214,14 +214,15 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
-  mailgun-ruby (~> 1.1.2)
   pg (~> 0.19.0)
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
   redis
+  rest-client
   rspec-rails (~> 3.5)
   sass-rails (~> 5.0)
   sidekiq
+  sidekiq-statistic
   sinatra
   spring
   spring-watcher-listen (~> 2.0.0)

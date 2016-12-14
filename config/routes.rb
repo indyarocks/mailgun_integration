@@ -7,4 +7,6 @@ Rails.application.routes.draw do
       get '/activate' => 'users#user_activation', as: :activate
     end
   end
+
+  mount Sidekiq::Web => '/admin/sidekiq'
 end

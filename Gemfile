@@ -25,6 +25,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'redis'
 gem 'sidekiq'
+gem 'sidekiq-statistic'
 gem 'sinatra', require: false
 
 gem 'bootstrap', '~> 4.0.0.alpha3'
@@ -39,9 +40,7 @@ gem 'bootstrap', '~> 4.0.0.alpha3'
 # Pagination
 gem 'will_paginate', '~> 3.1.0'
 
-# Mailgun Gem
-gem 'mailgun-ruby', '~>1.1.2'
-# gem 'mailgun_rails'
+gem 'rest-client'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

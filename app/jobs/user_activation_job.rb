@@ -5,7 +5,7 @@ class UserActivationJob < ApplicationJob
     user = User.find_by(id: user_id)
     if user.present?
       begin
-        MailgunService.new.send_email(user)
+        MailgunService.send_activation_email(user)
       rescue Exception => ex
         Rails.logger.debug("EXCEPTION RAISED: Mailgun mail failed: Message: #{ex.message}\n\n Backtrace: #{ex.backtrace}\n\n")
       end
