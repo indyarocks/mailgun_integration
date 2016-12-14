@@ -17,12 +17,11 @@ ActiveRecord::Schema.define(version: 20161214183220) do
   enable_extension "citext"
 
   create_table "mailgun_events", force: :cascade do |t|
-    t.integer  "message_id",                null: false
-    t.integer  "event",                     null: false
-    t.jsonb    "data",       default: "{}", null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.index ["data"], name: "index_mailgun_events_on_data", using: :gin
+    t.integer  "message_id", null: false
+    t.integer  "event",      null: false
+    t.string   "ip_address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["message_id"], name: "index_mailgun_events_on_message_id", using: :btree
   end
 

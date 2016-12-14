@@ -1,6 +1,8 @@
 class MailgunWebhookService < ApplicationService
+  require 'tempfile'
+  require 'csv'
 
-  def self.register_open(mailgun_id:, data:)
+  def self.register_open(mailgun_id:, ip_address:)
     message = Message.find_by(mailgun_id: mailgun_id)
     return {
         error: 'Invalid message id.'
@@ -8,7 +10,7 @@ class MailgunWebhookService < ApplicationService
 
     event = message.mailgun_events.new(
         event: :opened,
-        data: data
+        ip_address: ip_address
     )
     if event.save
       return {
@@ -21,21 +23,22 @@ class MailgunWebhookService < ApplicationService
     end
   end
 
-  def self.register_event(mailgun_id: , event: , data:, email:)
+  def self.register_event(mailgun_id: , event: , ip_address:, email:)
     message = Message.find_by(mailgun_id: mailgun_id)
     return {
       error: 'Invalid message id.',
       file: ''
     } if message.blank?
 
-    csv_file = CSV.generate do |csv|
+    temp_file = Tempfile.new("#{Time.now.to_i}_#{event}.csv")
+    csv_file = CSV.open(temp_file, 'w') do |csv|
       csv << [
-          email, data[:ip], message.subject, event
+          email, ip_address, message.subject, event
       ]
     end
     event = message.mailgun_events.new(
         event: event,
-        data: data
+        ip_address: ip_address
     )
     if event.save
       return {

@@ -6,9 +6,7 @@ class MailgunWebhookController < ApplicationController
   def message_open
     response = MailgunWebhookService.register_open(
         mailgun_id: open_params['message-id'],
-        data: {
-            ip: open_params['ip']
-        }
+        ip_address: open_params['ip']
     )
     status = response[:error].blank? ? 200 : 422
     render json: response, status: status
@@ -18,9 +16,7 @@ class MailgunWebhookController < ApplicationController
     response = MailgunWebhookService.register_event(
         mailgun_id: click_params['message-id'],
         event: click_params['event'],
-        data: {
-            ip: click_params['ip']
-        },
+        ip_address: click_params['ip'],
         email: click_params['recipient']
     )
     status = response[:error].blank? ? 200 : 422
