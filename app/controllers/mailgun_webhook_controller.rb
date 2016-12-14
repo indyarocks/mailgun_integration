@@ -5,7 +5,7 @@ class MailgunWebhookController < ApplicationController
 
   def message_open
     response = MailgunWebhookService.register_event(
-        mailgun_id: open_params['Message-Id'],
+        mailgun_id: open_params['message-id'],
         event: open_params['event'],
         data: {
             ip: open_params['ip']
@@ -17,7 +17,7 @@ class MailgunWebhookController < ApplicationController
 
   def message_click
     response = MailgunWebhookService.register_event(
-        mailgun_id: click_params['Message-Id'],
+        mailgun_id: click_params['message-id'],
         event: click_params['event'],
         data: {
             ip: click_params['ip']
@@ -28,8 +28,9 @@ class MailgunWebhookController < ApplicationController
   end
 
   def message_bounce
+    binding.pry
     response = MailgunWebhookService.register_event(
-        mailgun_id: bounce_params['Message-Id'],
+        mailgun_id: bounce_params['Message-Id'].to_s.gsub(/^<|>$/, ''), # Test webhook have different key here
         event: bounce_params['event'],
         data: {
             ip: bounce_params['ip']
@@ -63,11 +64,11 @@ class MailgunWebhookController < ApplicationController
     #     "controller"=>"mailgun_webhook",
     #     "action"=>"message_open"
     # }
-    params.permit(:ip, 'Message-Id', :recipient, :event, :timestamp, :token, :signature)
+    params.permit(:ip, 'message-id', :recipient, :event, :timestamp, :token, :signature)
   end
 
   def click_params
-    params.permit(:ip, 'Message-Id', :recipient, :event, :timestamp, :token, :signature)
+    params.permit(:ip, 'message-id', :recipient, :event, :timestamp, :token, :signature)
   end
 
   def bounce_params
