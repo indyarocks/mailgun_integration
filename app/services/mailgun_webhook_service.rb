@@ -4,7 +4,8 @@ class MailgunWebhookService < ApplicationService
     message = Message.find_by(mailgun_id: mailgun_id)
     return {
         error: 'Invalid message id.'
-    }
+    } if message.blank?
+
     event = message.mailgun_events.new(
         event: :opened,
         data: data
@@ -25,8 +26,8 @@ class MailgunWebhookService < ApplicationService
     return {
       error: 'Invalid message id.',
       file: ''
+    } if message.blank?
 
-    }
     csv_file = CSV.generate do |csv|
       csv << [
           email, data[:ip], message.subject, event
