@@ -1,0 +1,4 @@
+activation_reminder_job:
+  cron: "00 8 * * * *" #everyday 8 AM morning
+  class: "ActivationReminderJob"
+  queue: default
