@@ -1,5 +1,7 @@
 # Rails app integration with Mailgun API/Webhooks
 
+# USE URL Provided on top, to check the live tunneled version of app. 
+
 Integrating a Rails application with the Mailgun API.
 
 Things you may want to cover:
