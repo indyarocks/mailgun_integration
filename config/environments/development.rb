@@ -33,7 +33,7 @@ Rails.application.configure do
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
-  MAILER_HOST = 'http://136ead05.ngrok.io/' #'localhost:3000'
+  MAILER_HOST = 'http://84bf538b.ngrok.io/' #'localhost:3000'
   config.action_mailer.default_url_options = { host: MAILER_HOST}
 
   # Raise an error on page load if there are pending migrations.
